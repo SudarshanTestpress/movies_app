@@ -10,4 +10,9 @@ urlpatterns = [
         views.StudioUpdateView.as_view(),
         name="update_studio",
     ),
+    path(
+        "studio/<slug:slug>/delete",
+        views.StudioDeleteView.as_view(),
+        name="delete_studio",
+    ),
 ]

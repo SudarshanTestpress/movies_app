@@ -3,6 +3,16 @@
 {% block content %}
 {% load myfilters %}
 
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <div class="bg-indigo-700 pt-4 text-white" role="alert">
+                    <li>{{ message }}</li>
+                </div>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
     <div class="grid grid-cols-3 gap-10">
         {% for studio in studios %}
         <div class = "p-4">

@@ -79,3 +79,18 @@ class TestStudioUpdateView(TestCase, Mixin):
         )
         self.studio.refresh_from_db()
         self.assertEqual(self.studio.title, "I am a test studio upated")
+
+
+class TestStudioDeleteView(TestCase, Mixin):
+    def setUp(self):
+        self.studio = self.create_studio()
+
+    def test_page_serve_successful(self):
+        url = reverse("delete_studio", args=[self.studio.slug])
+        response = self.client.get(url)
+        self.assertEquals(response.status_code, 200)
+
+    def test_url_resolve_studio_delete_object(self):
+        studio_slug = self.studio.slug
+        view = resolve(f"/studio/{studio_slug}/delete")
+        self.assertEquals(view.func.view_class, views.StudioDeleteView)
