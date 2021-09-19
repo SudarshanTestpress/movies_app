@@ -94,3 +94,14 @@ class TestStudioDeleteView(TestCase, Mixin):
         studio_slug = self.studio.slug
         view = resolve(f"/studio/{studio_slug}/delete")
         self.assertEquals(view.func.view_class, views.StudioDeleteView)
+
+
+class TestDirectorListView(TestCase, Mixin):
+    def test_page_serve_successful(self):
+        url = reverse("list_director")
+        response = self.client.get(url)
+        self.assertEquals(response.status_code, 200)
+
+    def test_url_resolve_studio_list_object(self):
+        view = resolve("/director")
+        self.assertEquals(view.func.view_class, views.DirectorListView)

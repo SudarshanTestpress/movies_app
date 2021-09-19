@@ -15,4 +15,5 @@ urlpatterns = [
         views.StudioDeleteView.as_view(),
         name="delete_studio",
     ),
+    path("director", views.DirectorListView.as_view(), name="list_director"),
 ]
