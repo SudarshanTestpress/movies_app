@@ -4,7 +4,7 @@ from django.urls import reverse_lazy, reverse
 from django.contrib import messages
 
 
-from .models import Studio, Director
+from .models import Studio, Director, Movies
 from .forms import DirectorCreateForm
 
 
@@ -67,3 +67,10 @@ class DirectorDeleteView(DeleteView):
     def get_success_url(self):
         messages.success(self.request, "Director Profile was deleted successfully.")
         return reverse("list_director")
+
+
+class MovieListView(ListView):
+    model = Movies
+    paginate_by = 6
+    context_object_name = "movies"
+    template_name = "movies/movie_list.html"
