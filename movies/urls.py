@@ -17,4 +17,9 @@ urlpatterns = [
     ),
     path("director", views.DirectorListView.as_view(), name="list_director"),
     path("director/create", views.DirectorCreateView.as_view(), name="create_director"),
+    path(
+        "director/<str:pk>/update",
+        views.DirectorUpdateView.as_view(),
+        name="update_director",
+    ),
 ]

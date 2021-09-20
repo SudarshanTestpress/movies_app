@@ -50,3 +50,10 @@ class DirectorCreateView(CreateView):
     form_class = DirectorCreateForm
     template_name = "movies/create_director.html"
     success_url = reverse_lazy("list_director")
+
+
+class DirectorUpdateView(UpdateView):
+    model = Director
+    form_class = DirectorCreateForm
+    template_name = "movies/create_director.html"
+    success_url = reverse_lazy("list_director")
