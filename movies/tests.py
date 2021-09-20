@@ -1,13 +1,33 @@
 from django.test import TestCase
 from django.urls import reverse, resolve
 
-from .models import Studio
+from .models import Studio, Director
 from . import views
 
 
 class Mixin:
     def create_studio(self, title="Test title", website="https://github.com"):
         return Studio.objects.create(title=title, website=website)
+
+    def create_director(
+        self,
+        first_name="John",
+        middle_name="Matthew",
+        last_name="Doe",
+        phone_number="+919444161121",
+        birthdate="2021-5-8",
+        website="http://127.0.0.1:8000/director",
+        gender="Male",
+    ):
+        return Director.objects.create(
+            first_name=first_name,
+            middle_name=middle_name,
+            last_name=last_name,
+            phone_number=phone_number,
+            birthdate=birthdate,
+            website=website,
+            gender=gender,
+        )
 
 
 class TestStudioCreateView(TestCase, Mixin):
@@ -105,3 +125,35 @@ class TestDirectorListView(TestCase, Mixin):
     def test_url_resolve_studio_list_object(self):
         view = resolve("/director")
         self.assertEquals(view.func.view_class, views.DirectorListView)
+
+
+class TestDirectorCreateView(TestCase, Mixin):
+    def test_page_serve_successful(self):
+        url = reverse("create_director")
+        response = self.client.get(url)
+        self.assertEquals(response.status_code, 200)
+
+    def test_url_resolve_director_create_object(self):
+        view = resolve("/director/create")
+        self.assertEquals(view.func.view_class, views.DirectorCreateView)
+
+    def test_presence_of_csrf(self):
+        url = reverse("create_director")
+        response = self.client.get(url)
+        self.assertContains(response, "csrfmiddlewaretoken")
+
+    def test_director_save(self):
+
+        self.client.post(
+            "/director/create",
+            {
+                "first_name": "John",
+                "middle_name": "Matthew",
+                "last_name": "Doe",
+                "phone_number": "+919444161121",
+                "birthdate": "2021-5-8",
+                "website": "http://127.0.0.1:8000/director",
+                "gender": "M",
+            },
+        )
+        self.assertEqual(Director.objects.last().first_name, "John")
