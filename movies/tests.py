@@ -196,3 +196,18 @@ class TestDirectorUpdateView(TestCase, Mixin):
         self.director.refresh_from_db()
         self.assertEqual(self.director.first_name, "Mack")
         self.assertEqual(self.director.last_name, "Doe")
+
+
+class TestDirectorDeleteView(TestCase, Mixin):
+    def setUp(self):
+        self.director = self.create_director()
+
+    def test_page_serve_successful(self):
+        url = reverse("delete_director", args=[self.director.pk])
+        response = self.client.get(url)
+        self.assertEquals(response.status_code, 200)
+
+    def test_url_resolve_director_delete_object(self):
+        director_pk = self.director.pk
+        view = resolve(f"/director/{director_pk}/delete")
+        self.assertEquals(view.func.view_class, views.DirectorDeleteView)

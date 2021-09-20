@@ -22,4 +22,9 @@ urlpatterns = [
         views.DirectorUpdateView.as_view(),
         name="update_director",
     ),
+    path(
+        "director/<str:pk>/delete",
+        views.DirectorDeleteView.as_view(),
+        name="delete_director",
+    ),
 ]

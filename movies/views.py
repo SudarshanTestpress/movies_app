@@ -57,3 +57,13 @@ class DirectorUpdateView(UpdateView):
     form_class = DirectorCreateForm
     template_name = "movies/create_director.html"
     success_url = reverse_lazy("list_director")
+
+
+class DirectorDeleteView(DeleteView):
+    model = Director
+    template_name = "movies/delete_director.html"
+    context_object_name = "director"
+
+    def get_success_url(self):
+        messages.success(self.request, "Director Profile was deleted successfully.")
+        return reverse("list_director")
