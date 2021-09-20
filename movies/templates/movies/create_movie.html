@@ -1,0 +1,86 @@
+{% extends "base_movie.html" %}
+
+{% block content %}
+{% load myfilters %}
+<div class = "pl-96 pt-11 justify-center w-full">
+    <form method="post">
+        <div class = "p-4 rounded-lg bg-white shadow-lg justify-center inline-flex">
+        {% csrf_token %}
+        <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+            <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+            Movie name:
+            </label>
+            <div class="mt-1 sm:mt-0 sm:col-span-2">
+            {{form.title|addclass:"box-border border-2 border-green-900 max-w-lg block focus:ring-green-500 focus:border-green-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"}}
+            {{form.tille.errors}}
+            </div>
+            <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                Subtitle:
+            </label>
+            <div class="mt-1 sm:mt-0 sm:col-span-2">
+                {{form.subtitle|addclass:"box-border border-2 border-green-900 max-w-lg block focus:ring-green-500 focus:border-green-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"}}
+                {{form.subtitle.errors}}
+            </div>
+            <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                Directors:
+            </label>
+            <div class="mt-1 sm:mt-0 sm:col-span-2">
+                {{form.directors|addclass:"box-border border-2 border-green-900 max-w-lg block focus:ring-green-500 focus:border-green-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"}}
+                {{form.directors.errors}}
+            </div>
+            <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                Release date:
+            </label>
+            <div class="mt-1 sm:mt-0 sm:col-span-2">
+                {{form.released_date|addclass:"box-border border-2 border-green-900 max-w-lg block focus:ring-green-500 focus:border-green-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"}}
+                {{form.released_date.errors}}
+            </div>
+            <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                Studio:
+            </label>
+            <div class="mt-1 sm:mt-0 sm:col-span-2">
+                {{form.studio|addclass:"box-border border-2 border-green-900 max-w-lg block focus:ring-green-500 focus:border-green-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"}}
+                {{form.studio.errors}}
+            </div>
+            <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                Cover Photo:
+            </label>
+            <div class="mt-1 sm:mt-0 sm:col-span-2">
+                {{form.cover_image|addclass:" bg-white py-2 px-2 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"}}
+                {{form.cover_image.errors}}
+              </div>
+            <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                Review:
+            </label>
+            <div class="mt-1 sm:mt-0 sm:col-span-2">
+                {{form.review|addclass:"box-border border-2 border-green-900 max-w-lg block focus:ring-green-500 focus:border-green-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"}}
+                {{form.review.errors}}
+            </div>
+
+            <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                Genre:
+            </label>
+            <div class="mt-1 sm:mt-0 sm:col-span-2">
+                {{form.genre|addclass:"box-border border-2 border-green-900 max-w-lg block focus:ring-green-500 focus:border-green-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"}}
+                {{form.genre.errors}}
+            </div>
+            <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                ASIN:
+            </label>
+            <div class="mt-1 sm:mt-0 sm:col-span-2">
+                {{form.asin|addclass:"box-border border-2 border-green-900 max-w-lg block focus:ring-green-500 focus:border-green-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"}}
+                {{form.asin.errors}}
+            </div>
+        </div>
+    </div>
+
+        <div class="pt-5">
+            <div class="flex justify-end">
+            <button type="submit" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" value="Save">
+                Save
+            </button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock content %}
