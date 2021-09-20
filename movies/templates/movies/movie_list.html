@@ -1,0 +1,77 @@
+{% extends "base_movie.html" %}
+
+{% block content %}
+{% load myfilters %}
+{% load static %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <div class="bg-green-700 pt-4 text-white" role="alert">
+            <li>{{ message }}</li>
+        </div>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<div class="grid grid-cols-6 gap-8 pt-4 justify-center">
+    {% for movie in movies %}
+    <div class = "p-4 bg-white shadow-lg justify-center">
+        <div class="bg-gray-100 rounded-lg focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 focus-within:ring-indigo-500 overflow-hidden">
+            {% if movie.cover_image %}
+                <img src="{{movie.cover_image.url}}" class = "pointer-events-none group-hover:opacity-75">
+            {% else %}
+                <img src="{% static '/images/91a9Ez60pmL._AC_SY679_.jpg' %}" class = "pointer-events-none group-hover:opacity-75"> 
+            {% endif %}
+        </div>
+            <div class="">
+            <div class = "">
+                <label class="block break-words text-xl font-bold text-gray-700 sm:mt-px sm:pt-2">
+                    {{movie.title}}
+                </label>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                    {{movie.released_date}}
+                </label>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                    {% for tag in movie.genre.all %}
+                    <li> {{ tag.name }} </li>
+                    {% empty %}
+                    Genre not available
+                    {% endfor %}
+                </label>
+            
+            </div>
+      </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class = "pt-60 justify-end flex">
+    {% if is_paginated %}
+    <ul class="pagination">
+    {% if page_obj.has_previous %}
+        <li class = "bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+        <li class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in paginator.page_range %}
+        {% if page_obj.number == i %}
+        <li class="z-10 bg-green-50 border-green-500 text-green-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+        {% else %}
+        <li class = "bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"><a href="?page={{ i }}">{{ i }}</a></li>
+        {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+        <li class = "bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+    {% else %}
+        <li class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"><span>&raquo;</span></li>
+    {% endif %}
+    </ul>
+{% endif %}
+</div>
+
+
+{% endblock content %}
