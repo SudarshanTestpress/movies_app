@@ -28,4 +28,5 @@ urlpatterns = [
         name="delete_director",
     ),
     path("movie", views.MovieListView.as_view(), name="list_movie"),
+    path("movie/create", views.MovieCreateView.as_view(), name="create_movie"),
 ]
