@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body class = "bg-gray-100">
+        <div class = "bg-green-800 grid grid-flow-col justify-items-start space-x-3">
+            <div class = " w-2/3 ">
+                <h2 class="p-4 font-bold font-sans text-4xl text-white">
+                Movies
+                </h2>
+            </div>
+            <div class = "flex w-full justify-end space-x-3">
+                <a class="p-6 font-bold text-white object-left " href= "{% url 'create_studio'%}">Create Movie</a>
+                <a class="p-6 font-bold text-white object-left" href= "{% url 'list_studio'%}">All Movies</a>
+            </div>
+          </div>
+        <div class = "container mx-auto" >
+        {% block content %}
+        {% endblock content %}
+        </div>
+
+    </body>
+</html>

@@ -211,3 +211,14 @@ class TestDirectorDeleteView(TestCase, Mixin):
         director_pk = self.director.pk
         view = resolve(f"/director/{director_pk}/delete")
         self.assertEquals(view.func.view_class, views.DirectorDeleteView)
+
+
+class TestMovieListView(TestCase, Mixin):
+    def test_page_serve_successful(self):
+        url = reverse("list_movie")
+        response = self.client.get(url)
+        self.assertEquals(response.status_code, 200)
+
+    def test_url_resolve_movie_list_object(self):
+        view = resolve("/movie")
+        self.assertEquals(view.func.view_class, views.MovieListView)
