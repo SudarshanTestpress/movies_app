@@ -29,4 +29,9 @@ urlpatterns = [
     ),
     path("movie", views.MovieListView.as_view(), name="list_movie"),
     path("movie/create", views.MovieCreateView.as_view(), name="create_movie"),
+    path(
+        "movie/<slug:slug>/update",
+        views.MovieUpdateView.as_view(),
+        name="update_movie",
+    ),
 ]
