@@ -5,6 +5,7 @@ from django.contrib import messages
 
 
 from .models import Studio, Director
+from .forms import DirectorCreateForm
 
 
 class StudioCreateView(CreateView):
@@ -43,3 +44,9 @@ class DirectorListView(ListView):
     paginate_by = 6
     context_object_name = "directors"
     template_name = "movies/director_list.html"
+
+
+class DirectorCreateView(CreateView):
+    form_class = DirectorCreateForm
+    template_name = "movies/create_director.html"
+    success_url = reverse_lazy("list_director")
