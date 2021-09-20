@@ -32,7 +32,7 @@ class Director(models.Model):
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
 
     def save(self, *args, **kwargs):
-        value = self.first + self.last_name
+        value = self.first_name + self.last_name
         self.slug = slugify(value)
         super().save(*args, **kwargs)
 
