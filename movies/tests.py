@@ -157,3 +157,42 @@ class TestDirectorCreateView(TestCase, Mixin):
             },
         )
         self.assertEqual(Director.objects.last().first_name, "John")
+
+
+class TestDirectorUpdateView(TestCase, Mixin):
+    def setUp(self):
+        self.director = self.create_director()
+
+    def test_page_serve_successful(self):
+        url = reverse("update_director", args=[self.director.pk])
+        response = self.client.get(url)
+        self.assertEquals(response.status_code, 200)
+
+    def test_url_resolve_director_update_object(self):
+        director_slug = self.director.id
+        view = resolve(f"/director/{director_slug}/update")
+        self.assertEquals(view.func.view_class, views.DirectorUpdateView)
+
+    def test_presence_of_csrf(self):
+        url = reverse("update_director", args=[self.director.pk])
+        response = self.client.get(url)
+        self.assertContains(response, "csrfmiddlewaretoken")
+
+    def test_director_save(self):
+        director_slug = self.director.pk
+
+        self.client.post(
+            f"/director/{director_slug}/update",
+            {
+                "first_name": "Mack",
+                "middle_name": "Matthew",
+                "last_name": "Doe",
+                "phone_number": "+919444161121",
+                "birthdate": "2021-5-8",
+                "website": "http://127.0.0.1:8000/director",
+                "gender": "M",
+            },
+        )
+        self.director.refresh_from_db()
+        self.assertEqual(self.director.first_name, "Mack")
+        self.assertEqual(self.director.last_name, "Doe")
