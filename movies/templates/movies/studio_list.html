@@ -1,0 +1,55 @@
+{% extends "base_studio.html" %}
+
+{% block content %}
+{% load myfilters %}
+
+    <div class="grid grid-cols-3 gap-10">
+        {% for studio in studios %}
+        <div class = "p-4">
+            <div class = "flex-col">
+                <label class="block text-sm font-bold text-gray-700 sm:mt-px sm:pt-2">
+                    Title:
+                </label>
+                <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                    {{studio.title}}
+                </label>
+            </div>
+            <div>
+                <label class="block text-sm font-bold text-gray-700 sm:mt-px sm:pt-2">
+                    Website:
+                </label>
+                <div>
+                    <a href="{{studio.website}}" class="block text-sm break-words font-medium text-gray-700 sm:mt-px sm:pt-2">
+                        {{studio.website}}
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class = "pt-14 justify-end flex">
+        {% if is_paginated %}
+        <ul class="pagination">
+        {% if page_obj.has_previous %}
+            <li class = "bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+        {% else %}
+            <li class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"><span>&laquo;</span></li>
+        {% endif %}
+        {% for i in paginator.page_range %}
+            {% if page_obj.number == i %}
+            <li class="z-10 bg-indigo-50 border-indigo-500 text-indigo-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+            {% else %}
+            <li class = "bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"><a href="?page={{ i }}">{{ i }}</a></li>
+            {% endif %}
+        {% endfor %}
+        {% if page_obj.has_next %}
+            <li class = "bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+        {% else %}
+            <li class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"><span>&raquo;</span></li>
+        {% endif %}
+        </ul>
+    {% endif %}
+    </div>
+
+
+{% endblock content %}

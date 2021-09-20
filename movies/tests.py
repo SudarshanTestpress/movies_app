@@ -35,3 +35,14 @@ class TestStudioCreateView(TestCase, Mixin):
             },
         )
         self.assertEqual(Studio.objects.last().title, "I am a test studio")
+
+
+class TestStudioListView(TestCase, Mixin):
+    def test_page_serve_successful(self):
+        url = reverse("list_studio")
+        response = self.client.get(url)
+        self.assertEquals(response.status_code, 200)
+
+    def test_url_resolve_studio_list_object(self):
+        view = resolve("/studio")
+        self.assertEquals(view.func.view_class, views.StudioListView)
