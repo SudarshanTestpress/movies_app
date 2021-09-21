@@ -1,0 +1,77 @@
+{% extends "base_director.html" %}
+
+{% block content %}
+{% load static %}
+{% load myfilters %}
+
+<form method="post" novalidate autocomplete="off">
+    {% csrf_token %}
+    <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
+        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+          First Name:
+        </label>
+        <div class="mt-1 sm:mt-0 sm:col-span-2">
+          {{form.first_name|addclass:"box-border border-4 border-red-800 max-w-lg block focus:ring-red-500 focus:border-red-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"}}
+          {{form.first_name.errors}}
+        </div>  
+        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+            Middle Name:
+        </label>
+        <div class="mt-1 sm:mt-0 sm:col-span-2">
+            {{form.middle_name|addclass:"box-border border-4 border-red-800 max-w-lg block focus:ring-red-500 focus:border-red-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"}}
+            {{form.middle_name.errors}}
+        </div>  
+        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+            Last Name:
+        </label>
+        <div class="mt-1 sm:mt-0 sm:col-span-2">
+            {{form.last_name|addclass:"box-border border-4 border-red-800 max-w-lg block focus:ring-red-500 focus:border-red-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"}}
+            {{form.last_name.errors}}
+        </div>
+        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+            Phone Number:
+        </label>
+        <div class="mt-1 sm:mt-0 sm:col-span-2">
+            {{form.phone_number|addclass:"box-border border-4 border-red-800 max-w-lg block focus:ring-red-500 focus:border-red-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"}}
+            {{form.phone_number.errors}}
+        </div>
+        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+            Date Of Birth:
+        </label>
+        <div class="mt-1 sm:mt-0 sm:col-span-2">
+            {{form.birthdate|addclass:"box-border border-4 border-red-800 max-w-lg block focus:ring-red-500 focus:border-red-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"}}
+            {{form.birthdate.errors}}
+        </div>
+        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+            Gender:
+        </label>
+        <div class="mt-1 sm:mt-0 sm:col-span-2">
+            {{form.gender|addclass:"box-border border-4 border-red-800 max-w-lg block focus:ring-red-500 focus:border-red-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"}}
+            {{form.gender.errors}}
+        </div>
+
+        <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+            Website:
+        </label>
+        <div class="mt-1 sm:mt-0 sm:col-span-2">
+            {{form.website|addclass:"box-border border-4 border-red-800 max-w-lg block focus:ring-red-500 focus:border-red-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"}}
+            {{form.website.errors}}
+        </div>
+    </div>
+
+
+    <div class="pt-5">
+        <div class="flex justify-end">
+          <button type="submit" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500" value="Save">
+            Save
+          </button>
+        </div>
+      </div>
+</form>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/nocss/litepicker.js"></script>
+    <script src="{% static 'movies/datepicker.js' %}"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css"/>
+</head>
+{% endblock content %}
