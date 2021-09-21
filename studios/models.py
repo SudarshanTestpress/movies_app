@@ -32,7 +32,7 @@ class Director(models.Model):
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
 
     def save(self, *args, **kwargs):
-        value = self.first + self.last_name
+        value = self.first_name + self.last_name
         self.slug = slugify(value)
         super().save(*args, **kwargs)
 
@@ -41,7 +41,7 @@ class Director(models.Model):
 
 
 class Movies(models.Model):
-    title = title = models.CharField(max_length=40, unique=True)
+    title = models.CharField(max_length=40, unique=True)
     subtitle = models.URLField(max_length=400)
     slug = models.SlugField(max_length=200)
     directors = models.ManyToManyField(Director)
