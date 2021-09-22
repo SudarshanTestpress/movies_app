@@ -1,0 +1,72 @@
+{% extends "base_director.html" %}
+
+{% block content %}
+{% load static %}
+{% load myfilters %}
+
+<div class= "grid grid-cols-2 gap-10">
+    <div>
+        <div class = "mt-4 bg-red-800 shadow-lg p-4">
+            <label class="text-xl font-bold text-white sm:mt-px sm:pt-2">
+                Movies directed
+            </label>
+        </div>
+        <div class = "pt-6 gap-6 space-y-2">
+            {% for movie in movies %}
+            <div class = "p-4 grid bg-white shadow-lg">
+                <label class="text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                    {{movie.title}}                
+                </label>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class = "pt-5">
+    <div class = "pt-2 p-4 bg-red-50 shadow-lg">
+    <div class="mt-1 flex sm:mt-0 sm:col-span-2">
+        <label class="text-xl font-bold text-gray-700 sm:mt-px sm:pt-2">
+            {{director.first_name}} 
+            {% if director.middle_name %}
+                {{director.middle_name}}
+            {% endif %}
+            {{director.last_name}}
+        </label>
+    </div>  
+
+    <div class="block mt-1 sm:mt-0 sm:col-span-2">
+        <label class="text-sm font-bold text-gray-700 sm:mt-px sm:pt-2">
+            Phone Number:
+        </label>
+        <label class="text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+            {{director.phone_number}}
+        </label>
+    </div>
+    <div class="mt-1 sm:mt-1 sm:col-span-2">
+        <label class="text-sm font-bold text-gray-700 sm:mt-px sm:pt-2">
+            Date Of Birth:
+        </label>
+        <label class="text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+            {{director.birthdate}}
+        </label>
+    </div>
+    <div class="mt-1 sm:mt-1 sm:col-span-2">
+        <label class="text-sm font-bold text-gray-700 sm:mt-px sm:pt-2">
+            Gender:
+        </label>
+        <label class="text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+            {{director.gender}}
+        </label>
+    </div>
+
+  <div class="mt-1 sm:mt-1 sm:col-span-2">
+    <label class="text-sm font-bold text-gray-700 sm:mt-px sm:pt-2">
+        Website:
+    </label>
+    <a href="{{director.website}}" class="text-sm break-words font-medium text-gray-700 sm:mt-px sm:pt-2">
+        {{director.website}}
+    </a>
+  </div>
+        </div>
+    </div>
+</div>
+  {% endblock content %}

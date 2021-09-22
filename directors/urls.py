@@ -17,4 +17,9 @@ urlpatterns = [
         views.DirectorDeleteView.as_view(),
         name="delete",
     ),
+    path(
+        "<str:pk>/detail",
+        views.DirectorDetailView.as_view(),
+        name="detail",
+    ),
 ]
