@@ -122,3 +122,17 @@ class TestDirectorDeleteView(TestCase, Mixin):
         director_pk = self.director.pk
         view = resolve(f"/directors/{director_pk}/delete")
         self.assertEquals(view.func.view_class, views.DirectorDeleteView)
+
+
+class TestDirectorDetailView(TestCase, Mixin):
+    def setUp(self):
+        self.director = self.create_director()
+
+    def test_page_serve_successful(self):
+        url = reverse("directors:detail", args=[self.director.pk])
+        response = self.client.get(url)
+        self.assertEquals(response.status_code, 200)
+
+    def test_url_resolve_event_detail_object(self):
+        view = resolve(f"/directors/{self.director.pk}/detail")
+        self.assertEquals(view.func.view_class, views.DirectorDetailView)
