@@ -1,7 +1,14 @@
 from django.db import models
 from django.shortcuts import render
 from django_filters.views import FilterView
-from django.views.generic import CreateView, ListView, UpdateView, DeleteView
+
+from django.views.generic import (
+    CreateView,
+    ListView,
+    UpdateView,
+    DeleteView,
+    DetailView,
+)
 from django.urls import reverse_lazy, reverse
 from django.contrib import messages
 
@@ -40,3 +47,9 @@ class MovieDeleteView(DeleteView):
     def get_success_url(self):
         messages.success(self.request, "movie was deleted successfully.")
         return reverse("movies:list")
+
+
+class MovieDetailView(DetailView):
+    model = Movies
+    template_name = "movies/detail_view.html"
+    context_object_name = "movie"
