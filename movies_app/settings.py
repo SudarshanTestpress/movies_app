@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "studios",
     "taggit",
     "movies",
+    "django_filters",
 ]
 
 MIDDLEWARE = [

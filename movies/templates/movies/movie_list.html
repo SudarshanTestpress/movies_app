@@ -3,6 +3,7 @@
 {% block content %}
 {% load myfilters %}
 {% load static %}
+
 {% if messages %}
 <ul class="messages">
     {% for message in messages %}
@@ -13,42 +14,76 @@
 </ul>
 {% endif %}
 
-<div class="grid grid-cols-6 gap-8 pt-4 justify-center">
-    {% for movie in movies %}
-    <div class = "p-4 bg-white shadow-lg justify-center">
-        <div class="bg-gray-100 rounded-lg focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 focus-within:ring-indigo-500 overflow-hidden">
-            {% if movie.cover_image %}
-                <img src="{{movie.cover_image.url}}" class = "pointer-events-none group-hover:opacity-75">
-            {% else %}
-                <img src="{% static '/images/91a9Ez60pmL._AC_SY679_.jpg' %}" class = "pointer-events-none group-hover:opacity-75"> 
-            {% endif %}
-        </div>
-            <div class="">
-            <div class = "">
-                <label class="block break-words text-xl font-bold text-gray-700 sm:mt-px sm:pt-2">
-                    {{movie.title}}
+<div class = "grid-cols-2 justify-end flex flex-row">
+    <div class="w-2/6">
+        <form method = "GET" novalidate autocomplete="off">
+            <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                Filter by director:
                 </label>
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                    {{movie.released_date}}
-                </label>
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                    {% for tag in movie.genre.all %}
-                    <li> {{ tag.name }} </li>
-                    {% empty %}
-                    Genre not available
-                    {% endfor %}
-                </label>
-            
-            </div>
-      </div>
-    </div>
-    {% endfor %}
-</div>
+                <div class="mt-1 sm:mt-0 sm:col-span-2">
+                {{filter.form.directors|addclass:"box-border border-2 border-green-900 max-w-lg block focus:ring-green-500 focus:border-green-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"}}
+                </div>
 
+            <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                Filter by genre:
+                </label>
+                <div class="mt-1 sm:mt-0 sm:col-span-2">
+                {{filter.form.genre|addclass:"box-border border-2 border-green-900 max-w-lg block focus:ring-green-500 focus:border-green-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"}}
+                </div>
+
+            <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                    Filter by studio:
+                    </label>
+                    <div class="mt-1 sm:mt-0 sm:col-span-2">
+                    {{filter.form.studio|addclass:"box-border border-2 border-green-900 max-w-lg block focus:ring-green-500 focus:border-green-500 w-full shadow-sm sm:max-w-xs sm:text-sm border-gray-300 rounded-md"}}
+                    </div>
+
+            <div class="pt-5">
+                <div class="flex justify-center">
+                  <button type="button" class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" id="clear-filters">
+                    Clear all
+                  </button>
+                  <button type="submit" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" value="Save">
+                    Search
+                  </button>
+                </div>
+              </div>
+        </form>
+    </div>   
+    <div class="mx-8 grid grid-cols-6 gap-8 pt-4">
+        {% for movie in filter.qs %}
+        <div class = "p-4 bg-white shadow-lg justify-center">
+            <div class="bg-gray-100 rounded-lg focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 focus-within:ring-indigo-500 overflow-hidden">
+                {% if movie.cover_image %}
+                    <img src="{{movie.cover_image.url}}" class = "pointer-events-none group-hover:opacity-75" style="scale:10%;">
+                {% else %}
+                    <img src="{% static '/images/91a9Ez60pmL._AC_SY679_.jpg' %}" class = "pointer-events-none group-hover:opacity-75"> 
+                {% endif %}
+            </div>
+                <div class = "">
+                    <label class="block break-words text-xl font-bold text-gray-700 sm:mt-px sm:pt-2">
+                        {{movie.title}}
+                    </label>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                        {{movie.released_date}}
+                    </label>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                        {% for tag in movie.genre.all %}
+                        <li> {{ tag.name }} </li>
+                        {% empty %}
+                        Genre not available
+                        {% endfor %}
+                    </label>
+                
+                </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 <div class = "pt-60 justify-end flex">
     {% if is_paginated %}
     <ul class="pagination">
@@ -72,6 +107,9 @@
     </ul>
 {% endif %}
 </div>
+
+
+<script src="{% static 'movies/clear_filters.js' %}"></script>
 
 
 {% endblock content %}

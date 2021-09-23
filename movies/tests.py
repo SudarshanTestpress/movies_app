@@ -61,6 +61,9 @@ class Mixin:
 
 
 class TestMovieListView(TestCase, Mixin):
+    def setUp(self):
+        self.movie = self.create_movie()
+
     def test_page_serve_successful(self):
         url = reverse("movies:list")
         response = self.client.get(url)
@@ -69,6 +72,16 @@ class TestMovieListView(TestCase, Mixin):
     def test_url_resolve_movie_list_object(self):
         view = resolve("/movie")
         self.assertEquals(view.func.view_class, views.MovieListView)
+
+    def test_studio_filter_results(self):
+        studio_id = self.movie.studio.id
+        response = self.client.get(f"/movies/?genre=&studio={studio_id}")
+        self.assertContains(response, self.movie)
+
+    def test_genre_filter_results(self):
+        genre = "comedy"
+        response = self.client.get(f"/movies/?genre={genre}&studio=")
+        self.assertNotContains(response, self.movie)
 
 
 class TestMovieCreateView(TestCase, Mixin):

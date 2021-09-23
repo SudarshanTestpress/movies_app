@@ -6,6 +6,7 @@ from django.contrib import messages
 
 from studios.models import Movies
 from .forms import MovieCreateForm
+from .filters import MovieFilter
 
 
 class MovieListView(ListView):
@@ -13,6 +14,11 @@ class MovieListView(ListView):
     paginate_by = 6
     context_object_name = "movies"
     template_name = "movies/movie_list.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["filter"] = MovieFilter(self.request.GET, queryset=self.get_queryset())
+        return context
 
 
 class MovieCreateView(CreateView):
