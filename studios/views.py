@@ -11,7 +11,7 @@ class StudioCreateView(CreateView):
     model = Studio
     fields = ["title", "website"]
     template_name = "studios/create_studio.html"
-    success_url = reverse_lazy("list_studio")
+    success_url = reverse_lazy("studios:list")
 
 
 class StudioListView(ListView):
@@ -25,7 +25,7 @@ class StudioUpdateView(UpdateView):
     model = Studio
     fields = ["title", "website"]
     template_name = "studios/create_studio.html"
-    success_url = reverse_lazy("list_studio")
+    success_url = reverse_lazy("studios:list")
 
 
 class StudioDeleteView(DeleteView):
@@ -35,4 +35,4 @@ class StudioDeleteView(DeleteView):
 
     def get_success_url(self):
         messages.success(self.request, "Studio was deleted successfully.")
-        return reverse("list_studio")
+        return reverse("studios:list")
