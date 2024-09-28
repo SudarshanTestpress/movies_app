@@ -17,4 +17,9 @@ urlpatterns = [
         views.MovieDeleteView.as_view(),
         name="delete",
     ),
+    path(
+        "<slug:slug>/detail",
+        views.MovieDetailView.as_view(),
+        name="detail",
+    ),
 ]

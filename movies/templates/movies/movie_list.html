@@ -51,7 +51,7 @@
         </form>
     </div>   
     <div class="mx-8 grid grid-cols-6 gap-8 pt-4">
-        {% for movie in filter.qs %}
+        {% for movie in movies %}
         <div class = "p-4 bg-white shadow-lg justify-center">
             <div class="bg-gray-100 rounded-lg focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 focus-within:ring-indigo-500 overflow-hidden">
                 {% if movie.cover_image %}
@@ -84,30 +84,28 @@
         {% endfor %}
     </div>
 </div>
-<div class = "pt-60 justify-end flex">
-    {% if is_paginated %}
-    <ul class="pagination">
-    {% if page_obj.has_previous %}
-        <li class = "bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
-    {% else %}
-        <li class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"><span>&laquo;</span></li>
-    {% endif %}
-    {% for i in paginator.page_range %}
-        {% if page_obj.number == i %}
-        <li class="z-10 bg-green-50 border-green-500 text-green-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
-        {% else %}
-        <li class = "bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"><a href="?page={{ i }}">{{ i }}</a></li>
-        {% endif %}
-    {% endfor %}
-    {% if page_obj.has_next %}
-        <li class = "bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
-    {% else %}
-        <li class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"><span>&raquo;</span></li>
-    {% endif %}
-    </ul>
-{% endif %}
-</div>
 
+<div class = "pt-72 justify-end flex">
+{% if is_paginated %}
+<nav aria-label="Page navigation example" class="d-flex justify-content-center pt-3">
+  <ul class="pagination">
+    {% if page_obj.has_previous and page_obj.number != 2 %}
+    <li class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"><a href="?{% url_replace request 'page' 1 %}" tabindex="-1" aria-disabled="true">First Page</a></li>
+    {% endif %}
+    {% if page_obj.has_previous %}
+    <li class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"><a href="?{% url_replace request 'page' page_obj.previous_page_number %}">{{ page_obj.previous_page_number }}</a></li>
+    {% endif %}
+    <li class="bg-white border-green-300 text-green-500 hover:bg-green-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"><a href="#">{{ page_obj.number }}</a></li>
+    {% if page_obj.has_next %}
+    <li class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"><a href="?{% url_replace request 'page' page_obj.next_page_number %}">{{ page_obj.next_page_number }}</a></li>
+    {% endif %}
+    {% if page_obj.paginator.num_pages != page_obj.number and page_obj.paginator.num_pages != page_obj.next_page_number %}
+    <li class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"><a class="page-link text-dark" href="?{% url_replace request 'page' page_obj.paginator.num_pages %}">Last Page</a></li>
+    {% endif %}
+  </ul>
+</nav>
+</div>
+{% endif %}  
 
 <script src="{% static 'movies/clear_filters.js' %}"></script>
 

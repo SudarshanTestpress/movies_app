@@ -170,3 +170,17 @@ class TestMovieDeleteView(TestCase, Mixin):
         movie_slug = self.movie.slug
         view = resolve(f"/movie/{movie_slug}/delete")
         self.assertEquals(view.func.view_class, views.MovieDeleteView)
+
+
+class TestDirectorDetailView(TestCase, Mixin):
+    def setUp(self):
+        self.movie = self.create_movie()
+
+    def test_page_serve_successful(self):
+        url = reverse("directors:detail", args=[self.movie.slug])
+        response = self.client.get(url)
+        self.assertEquals(response.status_code, 200)
+
+    def test_url_resolve_event_detail_object(self):
+        view = resolve(f"/directors/{self.movie.slug}/detail")
+        self.assertEquals(view.func.view_class, views.MovieDetailView)

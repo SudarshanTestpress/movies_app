@@ -1,5 +1,14 @@
+from django.db import models
 from django.shortcuts import render
-from django.views.generic import CreateView, ListView, UpdateView, DeleteView
+from django_filters.views import FilterView
+
+from django.views.generic import (
+    CreateView,
+    ListView,
+    UpdateView,
+    DeleteView,
+    DetailView,
+)
 from django.urls import reverse_lazy, reverse
 from django.contrib import messages
 
@@ -9,16 +18,12 @@ from .forms import MovieCreateForm
 from .filters import MovieFilter
 
 
-class MovieListView(ListView):
+class MovieListView(FilterView):
     model = Movies
+    filterset_class = MovieFilter
     paginate_by = 6
     context_object_name = "movies"
     template_name = "movies/movie_list.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["filter"] = MovieFilter(self.request.GET, queryset=self.get_queryset())
-        return context
 
 
 class MovieCreateView(CreateView):
@@ -42,3 +47,9 @@ class MovieDeleteView(DeleteView):
     def get_success_url(self):
         messages.success(self.request, "movie was deleted successfully.")
         return reverse("movies:list")
+
+
+class MovieDetailView(DetailView):
+    model = Movies
+    template_name = "movies/detail_view.html"
+    context_object_name = "movie"

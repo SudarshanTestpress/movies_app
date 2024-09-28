@@ -1,0 +1,71 @@
+{% extends "base_movie.html" %}
+{% load static %}
+{% block content %}
+
+<div class = "flex justify-center">
+    <div class = "grid-cols-2 pt-4 flex flex-row">
+        <div class="flex inline-flex bg-gray-100 rounded-lg focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 focus-within:ring-indigo-500 overflow-hidden">
+            {% if movie.cover_image %}
+                <img src="{{movie.cover_image.url}}" class = "pointer-events-none group-hover:opacity-75" style="scale:10%;">
+            {% else %}
+                <img src="{% static '/images/91a9Ez60pmL._AC_SY679_.jpg' %}" class = "pointer-events-none group-hover:opacity-75"> 
+            {% endif %}
+        </div>
+        <div class = "p-4 space-y-2 mx-6 bg-white shadow-lg">
+            <div>
+                <label class="mt-2 text-sm font-bold text-2xl text-gray-700 truncate pointer-events-none">{{movie.title}}</label>
+            </div>
+            <div>
+                <label class="mt-2 text-sm font-bold text-sm text-gray-700 truncate pointer-events-none">{{movie.studio}}</label>
+            </div>
+            <div>
+                <label class="mt-2 text-sm font-bold text-sm text-gray-700 truncate pointer-events-none">{{movie.released_date}}</label>
+            </div>
+            <div>
+                <label class="mt-2 text-sm font-medium text-sm text-gray-700 truncate pointer-events-none">
+                    Directed by
+                </label>      
+                {% for director in movie.directors.all %}
+                    <a href="{%url 'movies:list' %}?directors={{director.id}}" class="block text-sm break-words font-bold text-blue-700 sm:mt-px sm:pt-2">{{director}}</a>
+                {% endfor %}
+            </div>
+            <div>
+                <label class="mt-2 text-sm font-medium text-sm text-gray-700 truncate pointer-events-none">
+                    Genre
+                </label>
+                {% for tag in movie.genre.all %}
+                <a href="{%url 'movies:list' %}?genre={{tag}}&studio=" class="block text-sm break-words font-bold text-blue-700 sm:mt-px sm:pt-2">{{tag}}</a>
+                {% empty %}
+                    Genre not available
+                {% endfor %}
+            </div>
+            <div>
+                <label class="mt-2 text-sm font-bold text-sm text-gray-700 truncate pointer-events-none">Studio</label>
+                <a href="{%url 'movies:list' %}?genre=&studio={{movie.studio.id}}" class="block text-sm break-words font-bold text-blue-700 sm:mt-px sm:pt-2">{{movie.studio}}</a>
+            </div>
+
+            <div>
+                <label class="mt-2 text-sm font-medium text-sm text-gray-700 truncate pointer-events-none">
+                    ASIN:
+                </label>
+                <label class="block mt-2 text-sm font-bold text-sm text-gray-700 truncate pointer-events-none">
+                    {{movie.asin}}
+                </label>
+            </div>
+            <div>
+                <label class="mt-2 text-sm font-medium text-sm text-gray-700 truncate pointer-events-none">
+                    Subtitle:
+                </label>
+                <a href="{{movie.subtitle}}" class="block text-sm break-words font-medium text-gray-700 sm:mt-px sm:pt-2">{{movie.subtitle}}</a>
+            </div>
+        </div>
+    </div>
+    <div class = "mt-4 p-4 bg-green-50 shadow-lg">
+        <div>
+            <label class="mt-2 text-sm font-medium text-sm text-gray-700 truncate pointer-events-none">
+                {{movie.review}}
+            </label>
+        </div>
+    </div>
+</div>
+{% endblock content %}
